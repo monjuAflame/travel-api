@@ -49,6 +49,38 @@ class ToursListTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(15, 'data');
-        $response->assertJsonPath('meta.current_page', 1);
+        $response->assertJsonPath('meta.last_page', 2);
     }
+
+    public function test_tours_list_sort_by_starting_date_correctly()
+    {
+        $travel = Travel::factory()->create(['is_public' => true]);
+        $earlierTour = Tour::factory()->create([
+            'travel_id' => $travel->id,
+            'starting_date' => now(),
+            'ending_date' => now()->addDays(1),
+        ]);
+        $laterTour = Tour::factory()->create([
+            'travel_id' => $travel->id,
+            'starting_date' => now()->addDays(2),
+            'ending_date' => now()->addDays(3),
+        ]);
+
+        $response = $this->get('api/v1/travels/'.$travel->slug.'/tours');
+
+        $response->assertStatus(200);
+        $response->assertJsonPath('data.0.id', $earlierTour->id);
+        $response->assertJsonPath('data.1.id', $laterTour->id);
+    }
+    // public function test_tours_list_return_validation_errors()
+    // {
+    //     $travel = Travel::factory()->create(['is_public' => true]);
+
+    //     $response = $this->get('api/v1/travels/'.$travel->slug.'/tours?dateForm=abc');
+    //     $response->assertStatus(422);
+
+    //     $response = $this->get('api/v1/travels/'.$travel->slug.'/tours?priceFrom=abc');
+    //     $response->assertStatus(422);
+
+    // }
 }
