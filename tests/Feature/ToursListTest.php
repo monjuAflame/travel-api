@@ -197,15 +197,15 @@ class ToursListTest extends TestCase
         $response->assertJsonFragment(['id' => $lateTour->id]);
 
     }
-    // public function test_tours_list_return_validation_errors()
-    // {
-    //     $travel = Travel::factory()->create();
+    public function test_tours_list_return_validation_errors()
+    {
+        $travel = Travel::factory()->create();
 
-    //     $response = $this->get('/api/v1/travels/'.$travel->slug.'/tours?dateForm=abcde');
-    //     $response->assertStatus(422);
+        $response = $this->get('/api/v1/travels/'.$travel->slug.'/tours?dateFrom=abcde');
+        $response->assertStatus(302);
 
-    //     $response = $this->get('api/v1/travels/'.$travel->slug.'/tours?priceFrom=abcde');
-    //     $response->assertStatus(422);
+        $response = $this->get('api/v1/travels/'.$travel->slug.'/tours?priceFrom=abcde');
+        $response->assertStatus(302);
 
-    // }
+    }
 }
