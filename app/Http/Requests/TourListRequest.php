@@ -32,4 +32,12 @@ class TourListRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'sortBy' => "The 'sortBy' parameter accepts only 'price' value",
+            'sortOrder' => "The 'sortOrder' parameter accepts only 'asc' or 'desc' value",
+        ];
+    }
+
 }

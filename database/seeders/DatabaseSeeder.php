@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call(RoleSeeder::class);
         $travel = Travel::factory()->create(['is_public' => true]);
         Tour::factory(10)->create(['travel_id' => $travel->id]);
     }
