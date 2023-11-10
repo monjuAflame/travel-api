@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TourListRequest;
 use App\Http\Resources\TourResource;
 use App\Models\Travel;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class TourController extends Controller
 {

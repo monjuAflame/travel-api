@@ -35,7 +35,7 @@ class CreateUserCommand extends Command
         $user['email'] = $this->ask('Email of the new user');
         $user['password'] = $this->secret('Password of the new user');
 
-        $roleName = $this->choice('Role of the new user',['admin','editor'], 1);
+        $roleName = $this->choice('Role of the new user', ['admin', 'editor'], 1);
         $role = Role::where('name', $roleName)->first();
         if(!$role)
         {
